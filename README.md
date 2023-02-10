@@ -1,2 +1,2 @@
-# futurense-bigdata-bootcamp
+# futurense-datengg-bootcamp
 BigData Bootcamp 
