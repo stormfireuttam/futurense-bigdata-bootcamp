@@ -18,7 +18,8 @@ with open('/home/uttam/futurense-datengg-bootcamp/assessments/bigdata-assessment
             output_values[1]=values[1]
             output_values[2]=""
         output_values[3]=values[2]
-        record="#".join(output_values)
+        record=";".join(output_values)
         f.write(record)
+        f.write("\n")
     f.close()
 
