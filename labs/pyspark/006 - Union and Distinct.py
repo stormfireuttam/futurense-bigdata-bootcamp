@@ -9,3 +9,7 @@
 [1, 2, 3, 4, 5, 5, 6, 7, 8, 9]
 >>> rdd3.distinct().collect()           # Wide Transformation
 [1, 2, 3,
+>>> rdd3.getNumPartitions()
+16
+>>> rdd1.getNumPartitions()
+8
