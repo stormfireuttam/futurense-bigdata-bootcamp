@@ -1,0 +1,4 @@
+data = [1,2,3,4,5]
+rdd1 = sc.parallelize(data)
+out = rdd1.map(lambda x : x ** 2)
+out.collect()                           # [1,4,9,16,25]
