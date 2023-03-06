@@ -1,0 +1,19 @@
+# Loading the data
+rdd1 = sc.textFile("/home/uttam/assessment-03/movies1.csv")
+rdd2 = rdd1.map(lambda x : x.split(';')).filter(lambda x : len(x) < 5).map(lambda x : [x[0],x[1],x[2],int(x[3])])
+
+# Total Number of Movies
+total_count = rdd2.count()
+print("Total Number of Movies :",total_count)
+
+# Year Wise Count of Movies
+rdd_yearwise = rdd2.map(lambda x : (x[3],1))
+rdd_yearwise_grouped = rdd_yearwise.reduceByKey(lambda a,b : a + b)
+rdd_yearwise_grouped_sorted = rdd_yearwise_grouped.sortBy(lambda x : x[1], ascending=False)
+rdd_yearwise_grouped_sorted.collect() 
+
+# Year Wise Trending Genres
+rdd_yearwise_genre = rdd2.filter(lambda x : x[2] != '(no genres listed)').map(lambda x : (x[3],x[2].split('|')))
+
+
+

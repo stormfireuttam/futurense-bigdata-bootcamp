@@ -1,0 +1,27 @@
+# SQL QUERY To Create Table
+###############################
+CREATE TABLE MOVIE_COUNT(Year Int, Count Int);
+
+
+# Sqoop Command to Write Data to MYSQL
+#######################################
+
+sqoop export \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table MOVIE_COUNT \
+--export-dir /user/training/movie/movie-count
+
+# Query And Store Top 5 Year In HDFS
+#####################################
+
+sqoop import \
+--connect jdbc:mysql://localhost/sqoop_training?useSSL=false \
+--username sqoop \
+--password sqoop \
+--table MOVIE_COUNT \
+--target-dir /user/training/movie/top5year \
+--m 1
+--query "SELECT * FROM MOVIE_COUNT ORDER BY YEAR LIMIT 5"
+

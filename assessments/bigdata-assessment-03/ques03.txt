@@ -1,0 +1,27 @@
+input = sc.textFile("/mnt/c/Users/miles/Documents/futurense-dataengg-bootcamp/movies.csv")
+df  = spark.read.load("hdfs://localhost:9000/user/training/movies/movies1.csv",format = "csv", sep = ",", delimiter=';',header=True,inferSchema=True)
+df2  = spark.read.load("hdfs://localhost:9000/user/training/movies/ratings.csv",format = "csv", sep = ",", delimiter=';',header=True,inferSchema=True)
+
+df.createOrReplaceTempView("Movies")
+
+df2.createOrReplaceTempView("Ratings")
+
+from pyspark.sql.fuctions import *
+
+a)
+>>> mov_count = spark.sql("select Yor, count(*)  from Movies group by Yor order by 2 desc")
+
+b)
+>>> spark.sql("select m.title, m.genres, r.rating from Movies as m join Ratings as r on m.movieId = r.movieId where m.Yor = 1995 order by 3 desc limit 3")
+
+c)
+>>> spark.sql("select m.Yor, m.genres from Movies as m order by m.Yor").show()
+
+d)
+mov_count.write.mode('overwrite').format('csv').save("hdfs://localhost:9000/user/training/movies/movie_count")
+
+e)
+mov_count.write.mode('overwrite').format('parquet').save("hdfs://localhost:9000/user/training/movies/movie_count_parq")
+mov_count.write.mode('overwrite').format('orc').save("hdfs://localhost:9000/user/training/movies/movie_count_orc")
+
+
