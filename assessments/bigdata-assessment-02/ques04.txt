@@ -1,0 +1,13 @@
+// Creation of sales_data table
+CREATE TABLE IF NOT EXISTS Sales_data (date String, product String, sales_amount float)
+COMMENT 'SALES_DATA details'
+ROW FORMAT DELIMITED
+FIELDS TERMINATED BY '\t'
+LINES TERMINATED BY '\n'
+STORED AS TEXTFILE;
+
+
+//Alter table to add partition
+ALTER TABLE sales_data ADD 
+IF NOT EXISTS PARTITION (region String)
+LOCATION 'path';

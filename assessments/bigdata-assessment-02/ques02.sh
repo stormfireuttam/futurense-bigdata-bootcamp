@@ -1,0 +1,1 @@
+hdfs dfs -rm -r $(hdfs dfs -ls -R <directory_path> | awk '$5==0 {print $NF}')
