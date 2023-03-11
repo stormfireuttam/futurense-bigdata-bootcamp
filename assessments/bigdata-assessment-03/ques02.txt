@@ -13,7 +13,6 @@ rdd_yearwise_grouped_sorted = rdd_yearwise_grouped.sortBy(lambda x : x[1], ascen
 rdd_yearwise_grouped_sorted.collect() 
 
 # Year Wise Trending Genres
-rdd_yearwise_genre = rdd2.filter(lambda x : x[2] != '(no genres listed)').map(lambda x : (x[3],x[2].split('|')))
-
-
+genre = rdd2.filter(lambda x : x[2] != '(no genres listed)').map(lambda x : (x[3],x[2].split('|')))
+genre_grouped = genre.groupByKey().map(lambda x : (x[0], list(x[1])))
 

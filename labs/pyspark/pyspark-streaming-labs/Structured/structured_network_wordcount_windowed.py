@@ -9,13 +9,13 @@ lines = spark\
         .option('includeTimestamp', 'true')\
         .load()
 
->>> lines.printSchema()
-root
- |-- value: string (nullable = true)
- |-- timestamp: timestamp (nullable = true)
+lines.printSchema()
+# root
+#  |-- value: string (nullable = true)
+#  |-- timestamp: timestamp (nullable = true)
   
->>> lines.isStreaming
-True
+lines.isStreaming
+# True
 
 # Split the lines into words, retaining timestamps
 # split() splits each line into an array, and explode() turns the array into multiple rows
@@ -32,13 +32,13 @@ windowedCounts = words.groupBy(
     words.word
 ).count().orderBy('window')
 
->>> windowedCounts.printSchema()
-root
- |-- window: struct (nullable = true)
- |    |-- start: timestamp (nullable = true)
- |    |-- end: timestamp (nullable = true)
- |-- word: string (nullable = false)
- |-- count: long (nullable = false)
+windowedCounts.printSchema()
+# root
+#  |-- window: struct (nullable = true)
+#  |    |-- start: timestamp (nullable = true)
+#  |    |-- end: timestamp (nullable = true)
+#  |-- word: string (nullable = false)
+#  |-- count: long (nullable = false)
   
 # Start running the query that prints the windowed word counts to the console
 query = windowedCounts\
