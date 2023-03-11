@@ -36,6 +36,27 @@ age_rdd = rdd3.map(lambda x :(x[0],1))
 age_rdd_grouped = age_rdd.reduceByKey(lambda a,b : a + b)
 age_rdd_grouped_sorted = age_rdd_grouped.sortBy(lambda x : x[1], ascending=False)
 
+# Show AgeGroup [Teenagers, Youngsters, MiddleAgers, Seniors] wise Subscription Count.
+def fun(x):
+    if x <20:
+        return 'Teenager'
+    elif x >=20 and x <40:
+        return 'Youngster'
+    elif x >=40 and x<60:
+        return 'MiddleAge'
+    else:
+        return 'Senior'
+
+ages_category = ages.map(lambda x : (fun(x), 1))
+ages_category.take(10)
+# [('MiddleAge', 1), ('MiddleAge', 1), ('Youngster', 1), ('MiddleAge', 1), ('Youngster', 1), ('Youngster', 1), ('Youngster', 1), ('MiddleAge', 1), ('MiddleAge', 1), ('MiddleAge', 1)]
+ages_category_grouped = ages_category.reduceByKey(lambda x, y : x + y)
+ages_category_grouped.collect()
+# [('Youngster', 23315), ('Teenager', 47), ('MiddleAge', 20065), ('Senior', 1784)]
+ages_category_grouped_sorted = ages_category_grouped.sortBy(lambda x : x[1], ascending=False)
+ages_category_grouped_sorted.collect()
+# [('Youngster', 23315), ('MiddleAge', 20065), ('Senior', 1784), ('Teenager', 47)]
+
 # Grouping by Marital Status and displaying count of records
 marital_rdd = rdd3.map(lambda x :(x[2],1))
 marital_rdd_grouped = marital_rdd.reduceByKey(lambda a,b : a + b)
