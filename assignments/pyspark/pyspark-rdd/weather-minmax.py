@@ -1,3 +1,7 @@
+import pyspark
+from pyspark import SparkContext
+
+sc = SparkContext("local", "Map app")
 rdd1 = sc.textFile("/home/uttam/futurense_hadoop-pyspark/labs/dataset/weather/weather_data.txt")
 rdd2 = rdd1.map(lambda x : x.split())
 max_temp = rdd2.map(lambda x : float(x[5])).collect()
